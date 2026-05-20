@@ -84,3 +84,19 @@ VALUES('Leonardo','Dicaprio','1974-11-11','Estadounidense'),
 ('Tom','Hardy','1977-09-15','Britanico'),
 ('Johny','Depp','1963-06-09','Estadounidense'),
 ('Natalie','Portman','1981-06-09','Estadounidense')
+
+insert into Peliculas(IDClasificacion,IDDirector,Titulo,anio,Duracion,Sinopsis,ImagenURL,TrailerURL,FechaAgregado)
+VALUES(2, 1, 'Inception', 2010, 148, 'Un grupo de especialistas ingresa en los sueños de las personas para manipular informacion.','https://m.media-amazon.com/images/M/MV5BZjhkNjM0ZTMtNGM5MC00ZTQ3LTk3YmYtZTkzYzdiNWE0ZTA2XkEyXkFqcGc@._V1_.jpg','https://www.youtube.com/watch?v=YoHD9XEInc0',GETDATE()),
+(4, 2, 'Pulp Fiction', 1994, 154, 'Historias criminales entrelazadas en Los Angeles con humor negro y violencia.','https://es.web.img3.acsta.net/img/05/66/05663f00b8b5df58b003aaf5c46ef8ad.jpg','https://www.youtube.com/watch?v=s7EdQ4FqbhY',GETDATE()),
+(2, 3, 'Jurassic Park', 1993, 127, 'Un parque tematico de dinosaurios clonados pierde el control.','https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg','https://www.youtube.com/watch?v=RtBuQmT6bb4',GETDATE()),
+(4, 4, 'The Wolf of Wall Street', 2013, 180, 'La historia de un corredor de bolsa y sus excesos financieros.','https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg','https://www.youtube.com/watch?v=DEMZSa0esCU',GETDATE()),
+(2, 5, 'Avatar', 2009, 162, 'Un exmarine llega a un planeta habitado por una civilizacion alienigena.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQun06pnV7nBiQGyoAZZuPDKrRWhMU6gO1hnFovukQ2ohepSmIRHiqXvV1K845x4u53OdtaUkcKuP8OSV_BKOnxXKiO3G5xKYXI6kaNqVNa&s=10','https://www.youtube.com/watch?v=AZS_d_hS2dM',GETDATE()),
+(3, 6, 'Gladiator', 2000, 155, 'Un general romano busca vengar la muerte de su familia y emperador.','https://pics.filmaffinity.com/Gladiator-368149580-large.jpg','https://www.youtube.com/watch?v=P5ieIbInFpg',GETDATE()),
+(2, 8, 'Dune', 2021, 155, 'Un joven noble debe proteger el recurso mas valioso del universo.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsdVL72BAawCztqiP5LvNmff3FprPY_SWZNasadhqoKKjbg7TSb0W-JJ0Lpw2aKhiZhkB46kMn2CzgqJja7gRUfXzbaohnwBqVZ_C6ea0&s=10','https://www.youtube.com/watch?v=6OmJF6VjKMA',GETDATE()),
+(4, 9, 'Fight Club', 1999, 139, 'Un hombre crea un club secreto de peleas que termina fuera de control.','https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg','https://www.youtube.com/watch?v=BdJKm16Co6M',GETDATE()),
+(3, 10, 'Sherlock Holmes', 2009, 128, 'El famoso detective investiga una amenaza sobrenatural en Londres.','https://pics.filmaffinity.com/sherlock_holmes-617003864-mmed.jpg','https://www.youtube.com/watch?v=wMK4s3MTeIg',GETDATE())
+
+insert into Usuarios(IDPais,IDTipoUsuario,nombre,Mail,Contrasena,FechaInicio)
+VALUES(1,1,'Raul','raulperez@hotmail.com','Contrasenia123',GETDATE()),
+(2,2,'jorge','jorgebritos@hotmail.com','Contrasenia123',GETDATE()),
+(3,3,'lautaro','lautarorodriguez@hotmail.com','Contrasenia123',GETDATE())

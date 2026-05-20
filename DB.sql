@@ -1,3 +1,7 @@
+USE master;
+GO
+DROP DATABASE IF EXISTS BdCine;
+GO
 CREATE DATABASE BdCine
 GO
 USE BdCine
@@ -69,8 +73,6 @@ CREATE TABLE Peliculas (
 CREATE TABLE Usuarios(
     IDUsuario bigint IDENTITY (1,1) PRIMARY KEY,
     IDPais BIGINT,
-    IDIdioma bigint,
-    IDSuscripcion BIGINT,
     IDTipoUsuario BIGINT,
     Nombre nvarchar(50),
     Mail nvarchar(100),
