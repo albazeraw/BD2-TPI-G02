@@ -100,3 +100,45 @@ insert into Usuarios(IDPais,IDTipoUsuario,nombre,Mail,Contrasena,FechaInicio)
 VALUES(1,1,'Raul','raulperez@hotmail.com','Contrasenia123',GETDATE()),
 (2,2,'jorge','jorgebritos@hotmail.com','Contrasenia123',GETDATE()),
 (3,3,'lautaro','lautarorodriguez@hotmail.com','Contrasenia123',GETDATE())
+
+insert into PeliculasGeneros(IDPelicula,IDGenero)
+--Inception
+VALUES(1,1),
+(1,5),
+(1,6),
+(1,17),
+--Pulp Fiction
+(2,3),
+(2,6),
+(2,16),
+(2,17),
+--Jurassic Park
+(3,1),
+(3,5),
+(3,10),
+--The Wolf of Wall Street
+(4,3),
+(4,16),
+--Avatar
+(5,1),
+(5,5),
+(5,10),
+(5,11),
+--Gladiator
+(6,1),
+(6,3),
+(6,10),
+(6,15),
+--Dune
+(7,1),
+(7,5),
+(7,10),
+(7,11),
+--Fight Club
+(8,3),
+(8,17),
+-- Sherlock Holmes
+(9,1),
+(9,7),
+(9,14),
+(9,17)
