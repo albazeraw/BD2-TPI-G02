@@ -1,4 +1,4 @@
-use BdCine
+use BdMovieRaiting
 GO
 insert into tipousuarios(TipoUsuario)
 VALUES 
@@ -30,7 +30,8 @@ VALUES
 ('Haiti')
 
 insert INTO ClasificacionPublico(Clasificacion,Descripcion)
-VALUES('ATP','Apta para todo publico'),
+VALUES
+('ATP','Apta para todo publico'),
 ('+13','+13: Contiene escenas que pueden no ser adecuadas para menores de 13 años.'),
 ('+16','+16: Contiene violencia, lenguaje o contenido no recomendado para menores de 16 años.'),
 ('+18','+18: Contenido exclusivo para adultos mayores de 18 años.+18: Contenido exclusivo para adultos mayores de 18 años.')
@@ -57,7 +58,8 @@ VALUES
 ('Familiar')
 
 insert INTO Directores(Nombre,apellido,FechaNacimiento,Nacionalidad)
-VALUES('Christopher','Nolan','1970-07-30','Britanico'),
+VALUES
+('Christopher','Nolan','1970-07-30','Britanico'),
 ('Quentin','Tarantino','1963-03-27','Estadounidense'),
 ('Steven','Spielberg','1946-12-18','Estadounidense'),
 ('Martin','Scorsese','1942-11-17','Estadounidense'),
@@ -69,7 +71,8 @@ VALUES('Christopher','Nolan','1970-07-30','Britanico'),
 ('Guy','Ritchie','1968-09-10','Britanico')
 
 insert into Actores(nombre,apellido,FechaNacimiento,Nacionalidad)
-VALUES('Leonardo','Dicaprio','1974-11-11','Estadounidense'),
+VALUES
+('Leonardo','Dicaprio','1974-11-11','Estadounidense'),
 ('Brad','Pitt','1963-12-18','Estadounidense'),
 ('Keanu','Reeves','1964-09-02','Canadiense'),
 ('Robert','Downey','1965-04-04','Estadounidense'),
@@ -83,10 +86,15 @@ VALUES('Leonardo','Dicaprio','1974-11-11','Estadounidense'),
 ('Anne','Hathaway','1982-11-12','Estadounidense'),
 ('Tom','Hardy','1977-09-15','Britanico'),
 ('Johny','Depp','1963-06-09','Estadounidense'),
-('Natalie','Portman','1981-06-09','Estadounidense')
+('Natalie','Portman','1981-06-09','Estadounidense'),
+('Sam','Worthington','1976-08-02','Australiano'),  
+('Timothe','Chalamet','1995-12-27','Estadounidense'), 
+('Rusell','Crowe','1964-04-07','Neozelandes'), 
+('Richard','Atenborough','1923-08-29','Britanico') 
 
 insert into Peliculas(IDClasificacion,IDDirector,Titulo,anio,Duracion,Sinopsis,ImagenURL,TrailerURL,FechaAgregado)
-VALUES(2, 1, 'Inception', 2010, 148, 'Un grupo de especialistas ingresa en los sueños de las personas para manipular informacion.','https://m.media-amazon.com/images/M/MV5BZjhkNjM0ZTMtNGM5MC00ZTQ3LTk3YmYtZTkzYzdiNWE0ZTA2XkEyXkFqcGc@._V1_.jpg','https://www.youtube.com/watch?v=YoHD9XEInc0',GETDATE()),
+VALUES
+(2, 1, 'Inception', 2010, 148, 'Un grupo de especialistas ingresa en los sueños de las personas para manipular informacion.','https://m.media-amazon.com/images/M/MV5BZjhkNjM0ZTMtNGM5MC00ZTQ3LTk3YmYtZTkzYzdiNWE0ZTA2XkEyXkFqcGc@._V1_.jpg','https://www.youtube.com/watch?v=YoHD9XEInc0',GETDATE()),
 (4, 2, 'Pulp Fiction', 1994, 154, 'Historias criminales entrelazadas en Los Angeles con humor negro y violencia.','https://es.web.img3.acsta.net/img/05/66/05663f00b8b5df58b003aaf5c46ef8ad.jpg','https://www.youtube.com/watch?v=s7EdQ4FqbhY',GETDATE()),
 (2, 3, 'Jurassic Park', 1993, 127, 'Un parque tematico de dinosaurios clonados pierde el control.','https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg','https://www.youtube.com/watch?v=RtBuQmT6bb4',GETDATE()),
 (4, 4, 'The Wolf of Wall Street', 2013, 180, 'La historia de un corredor de bolsa y sus excesos financieros.','https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg','https://www.youtube.com/watch?v=DEMZSa0esCU',GETDATE()),
@@ -97,13 +105,15 @@ VALUES(2, 1, 'Inception', 2010, 148, 'Un grupo de especialistas ingresa en los s
 (3, 10, 'Sherlock Holmes', 2009, 128, 'El famoso detective investiga una amenaza sobrenatural en Londres.','https://pics.filmaffinity.com/sherlock_holmes-617003864-mmed.jpg','https://www.youtube.com/watch?v=wMK4s3MTeIg',GETDATE())
 
 insert into Usuarios(IDPais,IDTipoUsuario,nombre,Mail,Contrasena,FechaInicio)
-VALUES(1,1,'Raul','raulperez@hotmail.com','Contrasenia123',GETDATE()),
-(2,2,'jorge','jorgebritos@hotmail.com','Contrasenia123',GETDATE()),
+VALUES
+(1,1,'Raul','raulperez@hotmail.com','Contrasenia123',GETDATE()),
+(2,2,'Jorge','jorgebritos@hotmail.com','Contrasenia123',GETDATE()),
 (3,3,'lautaro','lautarorodriguez@hotmail.com','Contrasenia123',GETDATE())
 
 insert into PeliculasGeneros(IDPelicula,IDGenero)
+VALUES
 --Inception
-VALUES(1,1),
+(1,1),
 (1,5),
 (1,6),
 (1,17),
@@ -142,3 +152,79 @@ VALUES(1,1),
 (9,7),
 (9,14),
 (9,17)
+
+insert into PeliculasActores(IDPelicula,IDActor,Personaje)
+VALUES
+-- Inception
+(1,1,'Cobb'),
+-- Jurassic Park
+(3,19,'John Hammond'),
+-- The Wolf of Wall Street
+(4,1,'Jordan Belfort'),
+(4,6,'Naomi Lapaglia'),
+-- Avatar
+(5,16,'Jake Sully'),
+-- Gladiator
+(6,18,'Maximus'),
+-- Dune
+(7,17,'Paul Atreides'),
+-- Fight Club
+(8,2,'Tyler Durden'),
+-- Sherlock Holmes
+(9,4,'Sherlock Holmes')
+
+
+insert into HistorialReproduccion(IDUsuario,IDPelicula,FechaReproduccion)
+VALUES
+(1,1,GETDATE()),
+(1,5,GETDATE()),
+(2,8,GETDATE())
+
+insert into Favoritos(IDUsuario,IDPelicula,FechaMarcado)
+VALUES
+(1,1,GETDATE()),
+(1,5,GETDATE()),
+(2,8,GETDATE())
+
+insert into Watchlist(IDUsuario,IDPelicula,FechaAgregado)
+VALUES
+(1,7,GETDATE()),
+(1,9,GETDATE()),
+(2,5,GETDATE()),
+(3,1,GETDATE())
+
+insert into Listas(IDUsuario,NombreLista,Descripcion,FechaCreacion,EsPublica)
+VALUES
+(1,'favoritas','peliculas que mas me gustron',GETDATE(),1),
+(1,'pendientes','peliculas que quiero ver despues',GETDATE(),0),
+(2,'accion','peliculas de accion recomendadas',GETDATE(),1),
+(3,'ciencia ficcion','peliculas de este genero que me gustaron',GETDATE(),1)
+
+insert into PeliculasPorLista(IDLista,IDPelicula,FechaAgregado)
+VALUES
+(1,1,GETDATE()),
+(1,8,GETDATE()),
+(2,7,GETDATE()),
+(2,9,GETDATE()),
+(3,5,GETDATE()),
+(3,6,GETDATE()),
+(4,1,GETDATE()),
+(4,7,GETDATE())
+
+insert into Comentarios(IDUsuario,IDPelicula,Comentario,FechaComentario)
+VALUES
+(1,1,'muy buena peli, el final me volo la cabeza',GETDATE()),
+(2,8,'de las mejores peliculas que vi',GETDATE()),
+(3,5,'muy buenos efectos visuales',GETDATE()),
+(1,7,'medio larga pero esta buena',GETDATE()),
+(2,9,'muy entretenida la verdad',GETDATE()),
+(3,4,'leonardo actua muy bien aca',GETDATE()),
+(1,6,'las escenas de pelea estan tremendas',GETDATE())
+
+insert into Puntuaciones(IDUsuario,IDPelicula,Puntaje,FechaPuntuacion)
+VALUES
+(1,1,10,GETDATE()),
+(1,5,8,GETDATE()),
+(2,8,9,GETDATE()),
+(2,5,7,GETDATE()),
+(3,1,9,GETDATE())

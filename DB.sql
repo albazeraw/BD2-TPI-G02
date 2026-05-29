@@ -1,10 +1,10 @@
 USE master;
 GO
-DROP DATABASE IF EXISTS BdCine;
+DROP DATABASE IF EXISTS BdMovieRaiting;
 GO
-CREATE DATABASE BdCine
+CREATE DATABASE BdMovieRaiting
 GO
-USE BdCine
+USE BdMovieRaiting
 GO
 
 
