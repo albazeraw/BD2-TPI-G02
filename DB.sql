@@ -7,18 +7,16 @@ GO
 USE BdMovieRaiting
 GO
 
-
 -- TABLAS SIN DEPENDENCIAS (van primero)
-
 
 CREATE TABLE TipoUsuarios(
     IDTipoUsuario bigint IDENTITY (1,1) PRIMARY KEY,
-    TipoUsuario nvarchar(15)
+    TipoUsuario nvarchar(15) NOT NULL
 )
 
 CREATE TABLE Paises(
     IDPais bigint IDENTITY (1,1) PRIMARY KEY,
-    Pais NVARCHAR(50)
+    Pais NVARCHAR(50) NOT NULL
 )
 
 CREATE TABLE ClasificacionPublico (
@@ -48,7 +46,6 @@ CREATE TABLE Actores (
     Nacionalidad nvarchar(50) NULL
 )
 
--------------------------------------
 -- PELICULAS (depende de Clasificacion y Directores)
 
 
@@ -66,25 +63,24 @@ CREATE TABLE Peliculas (
     CONSTRAINT FK_Pel_Clasificacion FOREIGN KEY (IDClasificacion) REFERENCES ClasificacionPublico(IDClasificacion),
     CONSTRAINT FK_Pel_Director FOREIGN KEY (IDDirector) REFERENCES Directores(IDDirector)
 )
--------------------------------------------------
+
 -- USUARIOS (depende de Paises y TipoUsuarios)
 
 
 CREATE TABLE Usuarios(
     IDUsuario bigint IDENTITY (1,1) PRIMARY KEY,
-    IDPais BIGINT,
-    IDTipoUsuario BIGINT,
-    Nombre nvarchar(50),
-    Mail nvarchar(100),
-    Contrasena NVARCHAR(20),
-    FechaInicio DATE,
+    IDPais BIGINT NOT NULL,
+    IDTipoUsuario BIGINT NOT NULL,
+    Nombre nvarchar(50) NOT NULL,
+    Mail nvarchar(100) NOT NULL,
+    Contrasena NVARCHAR(50) NOT NULL,
+    FechaInicio DATETIME NOT NULL DEFAULT GETDATE(),
     CONSTRAINT FK_Usu_Pais FOREIGN KEY (IDPais) REFERENCES Paises(IDPais),
     CONSTRAINT FK_Usu_TipoUsuario FOREIGN KEY (IDTipoUsuario) REFERENCES TipoUsuarios(IDTipoUsuario)
 )
 
--- =============================================
 -- TABLAS INTERMEDIAS Y DEPENDIENTES
--- =============================================
+
 
 CREATE TABLE PeliculasGeneros (
     IDPelicula bigint NOT NULL,
@@ -105,18 +101,18 @@ CREATE TABLE PeliculasActores (
 
 CREATE TABLE HistorialReproduccion(
     IDHistorialReproduccion bigint IDENTITY (1,1) PRIMARY KEY,
-    IDUsuario BIGINT,
-    IDPelicula BIGINT,
-    FechaReproduccion date,
+    IDUsuario BIGINT NOT NULL,
+    IDPelicula BIGINT NOT NULL,
+    FechaReproduccion date NOT NULL DEFAULT GETDATE(),
     CONSTRAINT FK_Hist_Usuario FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario),
     CONSTRAINT FK_Hist_Pelicula FOREIGN KEY (IDPelicula) REFERENCES Peliculas(IDPelicula)
 )
 
-CREATE TABLE Favoritos(
+create table Favoritos(
     IDUsuario bigint NOT NULL,
     IDPelicula bigint NOT NULL,
     FechaMarcado DATETIME NOT NULL DEFAULT GETDATE(),
-    PRIMARY KEY (IDUsuario, IDPelicula),
+    CONSTRAINT PK_Favoritos PRIMARY KEY (IDUsuario, IDPelicula),
     CONSTRAINT FK_Fav_Usuario FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario),
     CONSTRAINT FK_Fav_Pelicula FOREIGN KEY (IDPelicula) REFERENCES Peliculas(IDPelicula)
 )
@@ -133,10 +129,10 @@ CREATE TABLE Watchlist (
 CREATE TABLE Listas (
     IDLista bigint NOT NULL IDENTITY(1,1) PRIMARY KEY,
     IDUsuario bigint NOT NULL,
-    NombreLista nvarchar(100) NOT NULL,
-    Descripcion NVARCHAR(500) NULL,
+    NombreLista nvarchar (100) NOT NULL,
+    Descripcion NVARCHAR (500) NULL,
     FechaCreacion DATETIME NOT NULL DEFAULT GETDATE(),
-    EsPublica bit NOT NULL DEFAULT 1,
+    EsPublica BIT NOT NULL DEFAULT 1,
     CONSTRAINT FK_Listas_Usuario FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario)
 )
 
@@ -155,6 +151,7 @@ CREATE TABLE Comentarios (
     IDPelicula bigint NOT NULL,
     Comentario nvarchar(1000) NOT NULL,
     FechaComentario DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT UQ_Com_Usuario_Pelicula UNIQUE (IDUsuario, IDPelicula),
     CONSTRAINT FK_Com_Usuario FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario),
     CONSTRAINT FK_Com_Pelicula FOREIGN KEY (IDPelicula) REFERENCES Peliculas(IDPelicula)
 )
@@ -169,3 +166,4 @@ CREATE TABLE Puntuaciones (
     CONSTRAINT FK_Punt_Usuario FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario),
     CONSTRAINT FK_Punt_Pelicula FOREIGN KEY (IDPelicula) REFERENCES Peliculas(IDPelicula)
 )
+
