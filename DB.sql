@@ -167,3 +167,64 @@ CREATE TABLE Puntuaciones (
     CONSTRAINT FK_Punt_Pelicula FOREIGN KEY (IDPelicula) REFERENCES Peliculas(IDPelicula)
 )
 
+GO
+
+-- =============================================
+-- VISTA de top de mejores pelis :)
+-- =============================================
+
+CREATE VIEW vw_TopPeliculas AS
+SELECT
+    p.IDPelicula,
+    p.Titulo,
+    p.Anio,
+    p.Duracion,
+    d.Nombre + ' ' + d.Apellido AS Director,
+    c.Clasificacion,
+    CAST(AVG(CAST(pu.Puntaje AS FLOAT)) AS DECIMAL(4,2)) AS PuntajePromedio,
+    COUNT(pu.IDUsuario) AS CantidadVotos
+FROM Peliculas p
+    INNER JOIN Directores d       ON p.IDDirector     = d.IDDirector
+    INNER JOIN ClasificacionPublico c ON p.IDClasificacion = c.IDClasificacion
+    LEFT JOIN  Puntuaciones pu    ON p.IDPelicula      = pu.IDPelicula
+GROUP BY
+    p.IDPelicula,
+    p.Titulo,
+    p.Anio,
+    p.Duracion,
+    d.Nombre,
+    d.Apellido,
+    c.Clasificacion
+
+GO
+
+-- =============================================
+-- TRIGGER de historial de reproducción para evitar duplicados diarios por usuario y película
+-- =============================================
+
+CREATE TRIGGER trg_HistorialReproduccion_NoDuplicadoDiario
+ON HistorialReproduccion
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (
+        SELECT 1
+        FROM HistorialReproduccion hr
+        INNER JOIN inserted i
+            ON hr.IDUsuario          = i.IDUsuario
+            AND hr.IDPelicula        = i.IDPelicula
+            AND hr.FechaReproduccion = i.FechaReproduccion
+    )
+    BEGIN
+        RAISERROR('El usuario ya registró esta película en el historial para la fecha indicada.', 16, 1);
+        RETURN;
+    END
+
+    INSERT INTO HistorialReproduccion (IDUsuario, IDPelicula, FechaReproduccion)
+    SELECT IDUsuario, IDPelicula, FechaReproduccion
+    FROM inserted;
+END
+
+GO
