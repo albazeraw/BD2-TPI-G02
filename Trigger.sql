@@ -64,3 +64,44 @@ BEGIN
     FROM inserted;
 END
 GO
+
+create TRIGGER Tr_ValidarNombreLista
+on Listas 
+instead of INSERT
+as 
+BEGIN
+if EXISTS(
+    select 1 
+    from inserted
+    where LTRIM(RTRIM(NombreLista))=''
+    )
+    BEGIN 
+    RAISERROR('No podes ingresar un nombre de lista vacio',16,1)
+    RETURN;
+END 
+
+insert INTO Listas(IDUsuario,NombreLista,descripcion,FechaCreacion,EsPublica)
+select IDUsuario,NombreLista,descripcion,FechaCreacion,EsPublica
+from inserted;
+end
+GO
+
+create TRIGGER Tr_ValidarComentariosVacios
+on comentarios
+instead of INSERT
+AS
+BEGIN
+if EXISTS(
+    select 1 
+    from inserted
+    where LTRIM(RTRIM(comentario))=''
+)
+BEGIN 
+RAISERROR('No podes ingresar un comentario vacio',16,1)
+RETURN;
+END
+INSERT INTO comentarios(IDUsuario,IDPelicula,comentario,FechaComentario)
+select IDUsuario,IDPelicula,comentario,FechaComentario
+from inserted;
+END 
+go
