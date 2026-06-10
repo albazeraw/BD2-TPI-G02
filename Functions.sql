@@ -34,4 +34,3 @@ BEGIN
     RETURN @GeneroFavorito;
 END;
 GO
-

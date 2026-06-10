@@ -50,7 +50,7 @@ GO
 
 -- =============================================
 -- Vista de películas que ningún usuario 
--- ha puntuado todavía :)
+-- ha puntuado todavía
 -- =============================================
 CREATE OR ALTER VIEW vw_PeliculasSinPuntuar AS
 SELECT
@@ -69,4 +69,3 @@ WHERE NOT EXISTS (
     WHERE pu.IDPelicula = p.IDPelicula
 )
 GO
-
