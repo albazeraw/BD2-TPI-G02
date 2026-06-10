@@ -33,7 +33,7 @@ GO
 
 -- =============================================
 -- TRIGGER que valida que el usuario haya visto
--- la película antes de poder puntuarla
+-- la película antes de poder puntuarla :)
 -- =============================================
 CREATE TRIGGER trg_Puntuaciones_UsuarioDebeHaberVistoPelicula
 ON Puntuaciones
