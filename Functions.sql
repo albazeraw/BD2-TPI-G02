@@ -17,3 +17,20 @@ RETURN CAST(@horas as VARCHAR(25))+' horas y '+CAST(@minutos as VARCHAR(25))+' M
 END;
 GO
 
+create FUNCTION FN_GeneroFavorito(@IDUsuario BIGINT)
+RETURNS NVARCHAR(100)
+AS
+BEGIN
+    DECLARE @GeneroFavorito NVARCHAR(100);
+
+    SELECT TOP 1 @GeneroFavorito = g.Genero
+    FROM HistorialReproduccion hr
+    INNER JOIN PeliculasGeneros pg ON hr.IDPelicula = pg.IDPelicula
+    INNER JOIN Generos g ON pg.IDGenero = g.IDGenero
+    WHERE hr.IDUsuario = @IDUsuario
+    GROUP BY g.Genero
+    ORDER BY COUNT(*) DESC, g.Genero;
+
+    RETURN @GeneroFavorito;
+END;
+GO
