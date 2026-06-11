@@ -105,3 +105,20 @@ select IDUsuario,IDPelicula,comentario,FechaComentario
 from inserted;
 END 
 go
+
+
+--Marcar como Bajas o inactivos a usuarios borrados
+CREATE TRIGGER trg_BajaLogicaUsuario on Usuarios
+INSTEAD OF DELETE
+AS BEGIN
+    
+    IF EXISTS (SELECT 1 FROM deleted d INNER JOIN Usuarios u on d.IDUsuario = u.IDUsuario where u.Activo =0)    
+    BEGIN
+        RAISERROR ('El usuario ya fue dado de baja', 16, 1 )
+        RETURN;
+    END
+
+    UPDATE Usuarios SET Activo = 0, FechaBaja = GETDATE() WHERE IDUsuario in (SELECT IDUsuario From deleted);
+END
+GO
+

@@ -48,4 +48,57 @@ WHERE NOT EXISTS (
     SELECT 1 FROM Puntuaciones pu
     WHERE pu.IDPelicula = p.IDPelicula
 )
+
+GO
+
+--Vista peliculas mas comentadas
+create view vw_PeliculasMasComentadas as
+select p.titulo, d.nombre+' '+d.apellido as director, count(C.IDComentario) AS cantidadComentarios from Peliculas p
+INNER JOIN Directores D on D.IDDirector=P.IDDirector
+LEFT JOIN  Comentarios C ON C.IDPelicula=P.IDPelicula
+GROUP BY P.Titulo,D.Nombre,D.Apellido;
+
+
+GO
+--vista usuarios mas activos
+create view vw_UsuariosMasActivos AS
+select U.IDUsuario,U.Nombre,Count(distinct HR.IDPelicula) as CantidadPeliculasVistas,COUNT(distinct F.IDPelicula) AS CantidadFavoritos,COUNT(distinct C.IDComentario) as cantidadComentarios from Usuarios U
+LEFT JOIN HistorialReproduccion HR ON HR.IDUsuario=U.IDUsuario
+LEFT JOIN Favoritos F ON F.IDUsuario=U.IDUsuario
+LEFT JOIN Comentarios C ON C.IDUsuario=U.IDUsuario
+GROUP BY U.IDUsuario,U.Nombre;
+
+GO
+--vista de Usuarios que comentan VS los que puntúan
+CREATE VIEW vw_UsuariosComentanVsPuntuan AS
+SELECT u.IDUsuario, u.Nombre,
+COUNT (DISTINCT c.IDComentario) AS TotalComentarios,
+COUNT (DISTINCT pu.IDPelicula) AS PeliculasPuntuadas,
+AVG (pu.Puntaje) AS PromedioPuntaje,
+    CASE 
+        WHEN COUNT (DISTINCT c.IDComentario) > 10 THEN "Muy activo"
+        WHEN COUNT (DISTINCT pu.IDPelicula) > 5 THEN "Activo"
+        ELSE "Ocasional"
+    END as NivelParticipación
+FROM Usuarios U
+LEFT JOIN Comentarios c on u.IDUsuario = pu.IDUsuario
+LEFT join Puntuaciones pu on u.IDUsuario = pu.IDUsuario
+GROUP BY u.IDUsuario, u.Nombre ORDER BY TotalComentarios DESC;
+
+GO
+
+--Tiempo total de vista por usuarios
+CREATE VIEW vw_TiempoVistoPorUsuario AS
+SELECT TOP 20
+     u.IDUsuario, u.Nombre,
+COUNT (h.IDPeliculas) as PeliculasVistas,
+SUM (p.Duracion) as MinutosTotVistos,
+ROUND (sum (p.Duracion) / 60.0, 2) as HorasTotVistas,
+round (sum (p.Duracion) / 60.0 / 24.0, 1) as DiasTotVistas
+FROM Usuarios U 
+INNER JOIN HistorialReproduccion h on u.IDUsuario = h.IDUsuario
+INNER join Peliculas p on h.IDPelicula = p.IDPelicua
+GROUP BY u.IDUsuario, u.Nombre
+order by HorasTotVistas DESC
+
 GO
