@@ -42,7 +42,7 @@ end;
 GO
 
 CREATE PROCEDURE sp_MoverDeWatchlistAFavoritos
-    @IDUsuario bigint
+    @IDUsuario bigint,
     @IDPelicula bigint
 AS BEGIN
     BEGIN TRY
@@ -83,5 +83,35 @@ AS BEGIN
     BEGIN CATCH
         ROLLBACK TRANSACTION
         RAISERROR ('No se pudo concretar el cambio de lista', 16, 1)
+    END CATCH
+END
+GO
+
+CREATE PROCEDURE sp_RegistrarVistaPelicula
+    @IDUsuario  BIGINT,
+    @IDPelicula BIGINT
+AS BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT 1 FROM Usuarios WHERE IDUsuario = @IDUsuario AND Activo = 1)
+        BEGIN
+            RAISERROR ('El usuario no existe o está inactivo.', 16, 1);
+            RETURN;
+        END
+
+        IF NOT EXISTS (SELECT 1 FROM Peliculas WHERE IDPelicula = @IDPelicula AND Activo = 1)
+        BEGIN
+            RAISERROR ('La película no existe o está inactiva.', 16, 1);
+            RETURN;
+        END
+
+        -- El trigger trg_HistorialReproduccion_NoDuplicadoDiario bloquea
+        -- si ya existe un registro para el mismo usuario/película/fecha.
+        INSERT INTO HistorialReproduccion (IDUsuario, IDPelicula, FechaReproduccion)
+        VALUES (@IDUsuario, @IDPelicula, GETDATE());
+
+    END TRY
+    BEGIN CATCH
+        DECLARE @msg NVARCHAR(2048) = ERROR_MESSAGE();
+        RAISERROR (@msg, 16, 1);
     END CATCH
 END
